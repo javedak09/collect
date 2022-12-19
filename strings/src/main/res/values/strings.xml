@@ -30,6 +30,7 @@
     <string name="get_forms">Get Blank Form</string>
     <!-- Text for an action button on the main screen. -->
     <string name="manage_files">Delete Saved Form</string>
+    <string name="btn_csvodkdownloader">CSV ODK Downloader</string>
 
     <string name="saved_forms">Saved forms</string>
 

@@ -16,7 +16,10 @@ package org.odk.collect.android.activities;
 
 import static org.odk.collect.androidshared.ui.DialogFragmentUtils.showIfNotShowing;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.splashscreen.SplashScreen;
@@ -34,6 +38,7 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.activities.viewmodels.CurrentProjectViewModel;
 import org.odk.collect.android.activities.viewmodels.MainMenuViewModel;
 import org.odk.collect.android.application.MapboxClassInstanceCreator;
+import org.odk.collect.android.download.CSVODKDownloader;
 import org.odk.collect.android.formlists.blankformlist.BlankFormListActivity;
 import org.odk.collect.android.gdrive.GoogleDriveActivity;
 import org.odk.collect.android.injection.DaggerUtils;
@@ -48,6 +53,7 @@ import org.odk.collect.settings.SettingsProvider;
 import org.odk.collect.settings.keys.MetaKeys;
 import org.odk.collect.settings.keys.ProjectKeys;
 import org.odk.collect.strings.localization.LocalizedActivity;
+
 
 import javax.inject.Inject;
 
@@ -65,6 +71,7 @@ public class MainMenuActivity extends LocalizedActivity {
     private Button viewSentFormsButton;
     private Button reviewDataButton;
     private Button getFormsButton;
+    private Button btn_csvodkdownloader;
 
     @Inject
     MainMenuViewModel.Factory viewModelFactory;
@@ -201,6 +208,26 @@ public class MainMenuActivity extends LocalizedActivity {
                 startActivity(i);
             }
         });
+
+
+        btn_csvodkdownloader = findViewById(R.id.btn_csvodkdownloader);
+        btn_csvodkdownloader.setText(getString(R.string.btn_csvodkdownloader));
+        btn_csvodkdownloader.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+                if (networkInfo != null && networkInfo.isConnected()) {
+                    Toast.makeText(getApplicationContext(), "Fetching data ...", Toast.LENGTH_SHORT).show();
+                    new CSVODKDownloader(getApplicationContext()).execute();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No network connection available.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         TextView appName = findViewById(R.id.app_name);
         appName.setText(String.format("%s %s", getString(R.string.collect_app_name), mainMenuViewModel.getVersion()));
