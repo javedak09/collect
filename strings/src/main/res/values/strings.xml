@@ -1127,7 +1127,7 @@
     -->
     <!-- Tag line displayed on the first launch screen. The text should be split into two lines with \n. Please
     select the wording and where to put the \n for maximum impact in your language. -->
-    <string name="tagline">Collect data\nanywhere</string>
+    <string name="tagline">Data Collection App\nTVI</string>
     <!-- Text for the button that allows for configuring a project by scanning a QR code. Should be short -->
     <string name="configure_with_qr_code">Configure with QR code</string>
     <!-- Text for the button that allows for manually entering project details. Should be short -->

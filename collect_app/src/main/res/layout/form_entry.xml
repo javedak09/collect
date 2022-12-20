@@ -58,7 +58,6 @@ the License.
     </FrameLayout>
 
 
-
     <LinearLayout
         android:id="@+id/buttonholder"
         android:layout_width="match_parent"
@@ -84,7 +83,7 @@ the License.
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
             android:textStyle="bold"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <View
             android:layout_width="0dp"
@@ -106,6 +105,6 @@ the License.
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
             android:textStyle="bold"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
     </LinearLayout>
 </RelativeLayout>
