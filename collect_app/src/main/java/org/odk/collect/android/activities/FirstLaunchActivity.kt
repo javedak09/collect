@@ -58,7 +58,7 @@ class FirstLaunchActivity : CollectAbstractActivity() {
                 versionInformation.versionToDisplay
             )
 
-            configureLater.addOnClickListener {
+            /*configureLater.addOnClickListener {
                 Analytics.log(AnalyticsEvents.TRY_DEMO)
 
                 projectsRepository.save(Project.DEMO_PROJECT)
@@ -68,7 +68,7 @@ class FirstLaunchActivity : CollectAbstractActivity() {
                     this@FirstLaunchActivity,
                     MainMenuActivity::class.java
                 )
-            }
+            }*/
         }
     }
 }

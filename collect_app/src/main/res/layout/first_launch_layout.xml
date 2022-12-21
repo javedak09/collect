@@ -19,6 +19,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/collect_app_name"
             android:src="@drawable/odk_logo"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,24 +52,24 @@
                 style="@style/Widget.Collect.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_standard"
                 android:backgroundTint="?colorPrimary"
                 android:text="@string/configure_with_qr_code"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@android:color/white"
-                android:layout_marginTop="@dimen/margin_standard"
                 app:icon="@drawable/ic_baseline_qr_code_scanner_24"
                 app:iconTint="@android:color/white"
-                app:layout_constraintTop_toBottomOf="@id/tagline"
                 app:layout_constraintBottom_toTopOf="@+id/configure_manually_button"
                 app:layout_constraintEnd_toEndOf="@+id/barrierEnd"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintWidth_min="wrap"/>
+                app:layout_constraintTop_toBottomOf="@id/tagline"
+                app:layout_constraintWidth_min="wrap" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/configure_manually_button"
                 style="@style/Widget.Collect.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="283dp"
+                android:layout_height="56dp"
                 android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/configure_manually"
                 android:textAppearance="?attr/textAppearanceBody1"
@@ -77,7 +78,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/barrierEnd"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/configure_via_qr_button"
-                app:layout_constraintWidth_min="wrap"/>
+                app:layout_constraintWidth_min="wrap" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/barrierEnd"
@@ -102,7 +103,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/center"
             app:layout_constraintVertical_bias="1"
-            tools:text="ODK Collect v2022.3" />
+            tools:text="TVI Pneumonia v2022.3" />
 
         <TextView
             android:id="@+id/dont_have_server"
@@ -111,6 +112,7 @@
             android:layout_marginBottom="@dimen/margin"
             android:text="@string/dont_have_project"
             android:textAppearance="?textAppearanceBody2"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/try_collect"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -123,6 +125,7 @@
             android:layout_marginStart="@dimen/margin_extra_small"
             android:text="@string/try_demo"
             android:textAppearance="@style/TextAppearance.Collect.Link"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/dont_have_server"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dont_have_server"
@@ -132,7 +135,7 @@
             android:id="@+id/configureLater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             app:constraint_referenced_ids="dont_have_server,try_collect" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

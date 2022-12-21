@@ -416,7 +416,6 @@ public class FormDownloadListActivity extends FormListActivity implements FormLi
                 } else {
                     webCredentialsUtils.clearCredentials(viewModel.getUrl());
                 }
-
             }
 
             downloadFormsTask.execute(filesToDownload);
