@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -216,15 +217,22 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
 
                 JSONArray json = new JSONArray(result);
 
+                String[] file_arr = null;
+
                 //File file_lf = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects/abbd3edb-a075-4b6e-9732-406f537bc20c/forms/FORM NO A 1 CRF Pneumonia-media/" + "forma0.csv");
-                File file_lf = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects/137e949e-5cd2-466f-994f-f7ff94c9cb5d/forms/FORM NO A 1 CRF Pneumonia-media/" + "forma0.csv");
 
 
-                //File file_lf = new File(Environment.getExternalStorageDirectory() + "/tvipneumonia2022/forma0.csv");
+                file_arr = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects").list();
 
 
-                String csvString = CDL.toString(json);
-                FileUtils.writeStringToFile(file_lf, csvString);
+                for (int a = 0; a <= file_arr.length - 1; a++) {
+
+                    File file_lf = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects/" + file_arr[a] + "/forms/FORM NO A 1 CRF Pneumonia-media/" + "forma0.csv");
+
+                    String csvString = CDL.toString(json);
+                    FileUtils.writeStringToFile(file_lf, csvString);
+
+                }
 
 
                 //DatabaseHelper db = new DatabaseHelper(mContext);
@@ -248,8 +256,7 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
                 //pd.show();
             }
 
-        } catch (JSONException |
-                IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
             Toast.makeText(mContext, "Error CSV downloading " + e.getMessage(), Toast.LENGTH_SHORT).show();
             //pd.cancel();
