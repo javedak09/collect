@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -638,6 +639,21 @@ public class ODKView extends SwipeHandler.View implements OnLongClickListener, W
             }, 100);
         }
     }
+
+
+    public void highlightWidget_javed(FormIndex formIndex) {
+        QuestionWidget qw = getQuestionWidget(formIndex);
+
+        if (qw != null) {
+            // postDelayed is needed because otherwise scrolling may not work as expected in case when
+            // answers are validated during form finalization.
+
+            qw.setFocus(getContext());
+            qw.setBackgroundColor(Color.RED);
+
+        }
+    }
+
 
     private QuestionWidget getQuestionWidget(FormIndex formIndex) {
         for (QuestionWidget qw : widgets) {

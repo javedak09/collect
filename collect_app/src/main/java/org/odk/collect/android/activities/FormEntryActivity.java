@@ -72,6 +72,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.javarosa.core.model.FormDef;
 import org.javarosa.core.model.FormIndex;
+import org.javarosa.core.model.QuestionDef;
 import org.javarosa.core.model.SelectChoice;
 import org.javarosa.core.model.data.IAnswerData;
 import org.javarosa.core.model.data.helper.Selection;
@@ -648,8 +649,8 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
             if (candidateForms.isEmpty()) {
                 createErrorDialog(getString(
-                        R.string.parent_form_not_present,
-                        instance.getFormId())
+                                R.string.parent_form_not_present,
+                                instance.getFormId())
                                 + ((instance.getFormVersion() == null) ? ""
                                 : "\n" + getString(R.string.version) + " " + instance.getFormVersion()),
                         true);
@@ -1567,6 +1568,8 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     constraintText = formController.getQuestionPrompt(index)
                             .getSpecialFormQuestionText("requiredMsg");
                     if (constraintText == null) {
+                        ODKView odk_view = getCurrentViewIfODKView();
+                        odk_view.highlightWidget_javed(index);      // non group questions
                         constraintText = getString(R.string.required_answer_error);
                     }
                 }
