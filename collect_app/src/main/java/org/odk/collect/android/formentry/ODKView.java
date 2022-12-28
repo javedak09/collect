@@ -47,6 +47,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.google.android.material.button.MaterialButton;
 
 import org.javarosa.core.model.Constants;
+import org.javarosa.core.model.FormDef;
 import org.javarosa.core.model.FormIndex;
 import org.javarosa.core.model.IFormElement;
 import org.javarosa.core.model.QuestionDef;
@@ -63,6 +64,7 @@ import org.odk.collect.android.exception.JavaRosaException;
 import org.odk.collect.android.externaldata.ExternalAppsUtils;
 import org.odk.collect.android.formentry.media.AudioHelperFactory;
 import org.odk.collect.android.formentry.media.PromptAutoplayer;
+import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.formentry.questions.QuestionTextSizeHelper;
 import org.odk.collect.android.javarosawrapper.FormController;
 import org.odk.collect.android.listeners.SwipeHandler;
@@ -93,6 +95,7 @@ import org.odk.collect.audiorecorder.recording.AudioRecorder;
 import org.odk.collect.permissions.PermissionListener;
 import org.odk.collect.permissions.PermissionsProvider;
 import org.odk.collect.settings.SettingsProvider;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.Serializable;
@@ -143,6 +146,7 @@ public class ODKView extends SwipeHandler.View implements OnLongClickListener, W
 
     /**
      * Builds the view for a specified question or field-list of questions.
+     *
      * @param context         the activity creating this view
      * @param questionPrompts the questions to be included in this view
      * @param groups          the group hierarchy that this question or field list is in
@@ -648,8 +652,11 @@ public class ODKView extends SwipeHandler.View implements OnLongClickListener, W
             // postDelayed is needed because otherwise scrolling may not work as expected in case when
             // answers are validated during form finalization.
 
-            qw.setFocus(getContext());
-            qw.setBackgroundColor(Color.RED);
+            //String str = qw.getQuestionDetails().getPrompt().getQuestionText();
+
+
+            //qw.setFocus(getContext());
+            //qw.setBackgroundColor(Color.RED);
 
         }
     }

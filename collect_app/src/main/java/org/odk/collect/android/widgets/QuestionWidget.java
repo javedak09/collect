@@ -360,6 +360,8 @@ public abstract class QuestionWidget extends FrameLayout implements Widget {
         if (questionDetails.isReadOnly() && formEntryPrompt.getAnswerValue() == null) {
             findViewById(R.id.space_box).setVisibility(VISIBLE);
             findViewById(R.id.answer_container).setVisibility(GONE);
+
+
         }
     }
 

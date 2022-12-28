@@ -37,6 +37,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -187,6 +188,7 @@ import org.odk.collect.settings.keys.ProtectedProjectKeys;
 import org.odk.collect.shared.strings.Md5;
 
 import java.io.File;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1568,8 +1570,17 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     constraintText = formController.getQuestionPrompt(index)
                             .getSpecialFormQuestionText("requiredMsg");
                     if (constraintText == null) {
-                        ODKView odk_view = getCurrentViewIfODKView();
-                        odk_view.highlightWidget_javed(index);      // non group questions
+                        odkView = getCurrentViewIfODKView();
+
+                        //odk_view.highlightWidget_javed(index);
+
+                        //odkView.setBackgroundColor(Color.RED);
+
+                        odkView.getWidgets().get(0).setBackgroundColor(Color.RED);
+
+                        questionHolder.findViewById(R.id.question_label);
+                        questionHolder.setBackgroundColor(Color.RED);
+
                         constraintText = getString(R.string.required_answer_error);
                     }
                 }
