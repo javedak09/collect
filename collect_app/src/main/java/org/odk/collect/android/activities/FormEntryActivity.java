@@ -70,6 +70,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
 
 import org.javarosa.core.model.FormDef;
 import org.javarosa.core.model.FormIndex;
@@ -119,6 +120,7 @@ import org.odk.collect.android.formentry.audit.IdentityPromptViewModel;
 import org.odk.collect.android.formentry.backgroundlocation.BackgroundLocationManager;
 import org.odk.collect.android.formentry.backgroundlocation.BackgroundLocationViewModel;
 import org.odk.collect.android.formentry.loading.FormInstanceFileCreator;
+import org.odk.collect.android.formentry.questions.AudioVideoImageTextLabel;
 import org.odk.collect.android.formentry.repeats.AddRepeatDialog;
 import org.odk.collect.android.formentry.repeats.DeleteRepeatDialogFragment;
 import org.odk.collect.android.formentry.saving.FormSaveViewModel;
@@ -158,6 +160,7 @@ import org.odk.collect.android.utilities.PlayServicesChecker;
 import org.odk.collect.android.utilities.ScreenContext;
 import org.odk.collect.android.utilities.SnackbarUtils;
 import org.odk.collect.android.utilities.SoftKeyboardController;
+import org.odk.collect.android.utilities.ThemeUtils;
 import org.odk.collect.android.widgets.DateTimeWidget;
 import org.odk.collect.android.widgets.QuestionWidget;
 import org.odk.collect.android.widgets.RangePickerDecimalWidget;
@@ -495,7 +498,9 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                 try {
                     createConstraintToast(failedConstraint.index, failedConstraint.status);
                     if (getFormController().indexIsInFieldList() && getFormController().getQuestionPrompts().length > 1) {
-                        getCurrentViewIfODKView().highlightWidget(failedConstraint.index);
+
+                        getCurrentViewIfODKView().Clear_highlightWidget_javed();
+                        getCurrentViewIfODKView().highlightWidget_javed(failedConstraint.index);
                     }
                 } catch (RepeatsInFieldListException e) {
                     createErrorDialog(e.getMessage(), false);
@@ -503,6 +508,7 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
 
                 swipeHandler.setBeenSwiped(false);
             }
+
         });
 
         formSaveViewModel = new ViewModelProvider(this, formSaveViewModelFactoryFactory.create(this, null)).get(FormSaveViewModel.class);
@@ -1570,17 +1576,6 @@ public class FormEntryActivity extends CollectAbstractActivity implements Animat
                     constraintText = formController.getQuestionPrompt(index)
                             .getSpecialFormQuestionText("requiredMsg");
                     if (constraintText == null) {
-                        odkView = getCurrentViewIfODKView();
-
-                        //odk_view.highlightWidget_javed(index);
-
-                        //odkView.setBackgroundColor(Color.RED);
-
-                        odkView.getWidgets().get(0).setBackgroundColor(Color.RED);
-
-                        questionHolder.findViewById(R.id.question_label);
-                        questionHolder.setBackgroundColor(Color.RED);
-
                         constraintText = getString(R.string.required_answer_error);
                     }
                 }

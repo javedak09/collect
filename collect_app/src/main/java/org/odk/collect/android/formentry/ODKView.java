@@ -34,6 +34,8 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ import android.widget.Toast;
 import androidx.activity.ComponentActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.solver.widgets.WidgetContainer;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -64,6 +67,7 @@ import org.odk.collect.android.exception.JavaRosaException;
 import org.odk.collect.android.externaldata.ExternalAppsUtils;
 import org.odk.collect.android.formentry.media.AudioHelperFactory;
 import org.odk.collect.android.formentry.media.PromptAutoplayer;
+import org.odk.collect.android.formentry.questions.AnswersProvider;
 import org.odk.collect.android.formentry.questions.QuestionDetails;
 import org.odk.collect.android.formentry.questions.QuestionTextSizeHelper;
 import org.odk.collect.android.javarosawrapper.FormController;
@@ -655,10 +659,27 @@ public class ODKView extends SwipeHandler.View implements OnLongClickListener, W
             //String str = qw.getQuestionDetails().getPrompt().getQuestionText();
 
 
-            //qw.setFocus(getContext());
-            //qw.setBackgroundColor(Color.RED);
+            qw.getFormEntryPrompt().getAnswerText();
+
+            if (qw.getAnswer() == null) {
+                qw.setFocus(getContext());
+                qw.setBackgroundColor(Color.RED);
+            } else {
+                qw.setBackgroundColor(Color.WHITE);
+            }
 
         }
+    }
+
+
+    public void Clear_highlightWidget_javed() {
+        int count = 0;
+
+        for (QuestionWidget qw : widgets) {
+            widgets.get(count).setBackgroundColor(Color.WHITE);
+            count++;
+        }
+
     }
 
 
@@ -670,6 +691,7 @@ public class ODKView extends SwipeHandler.View implements OnLongClickListener, W
         }
         return null;
     }
+
 
     /**
      * Removes the widget and corresponding divider at a particular index.
