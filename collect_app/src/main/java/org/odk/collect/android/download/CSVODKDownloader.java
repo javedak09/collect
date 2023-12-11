@@ -64,7 +64,8 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
             // String url = "https://kc.humanitarianresponse.info/api/v1/data/1278925";     // get specific instance form
 
             //String url = AppMain.PROJECT_URI + FormsContract.FormsTable.URI;
-            String url = "https://kc.humanitarianresponse.info/api/v1/data";
+            //String url = "https://kc.humanitarianresponse.info/api/v1/data";
+            String url = "https://kf.kobotoolbox.org/api/v2/assets/aPpyiefh6MNRkYaLAH2wZe/data.json";
             Timber.i("doInBackground: URL %s ", url);
             return downloadUrl(url);
         } catch (IOException e) {
@@ -104,7 +105,7 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
                 Request request = new Request.Builder()
                         .url(url)
                         .get()
-                        .addHeader("authorization", "token 281de2b90e14e068f73614375903cb427c41bb96")
+                        .addHeader("authorization", "token 697f5d53f9372ca7d986369841b775c94e459578")
                         .addHeader("cache-control", "no-cache")
                         .addHeader("Content-Type", "application/json")
                         .addHeader("charset", "utf-8")
@@ -125,13 +126,12 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
                     }
                     reader.close();
 
-                    JSONArray json = new JSONArray(sb.toString());
+                    JSONObject json_obj = new JSONObject(sb.toString());
+                    JSONArray json = json_obj.getJSONArray("results");
 
                     for (int i = 0; i < json.length(); i++) {
                         JSONObject jsonObject = new JSONObject(json.getString(i));
-                        if (jsonObject.getString("title").equals("FORM A-0: INITIAL ASSESSMENT FORM")) {
-                            var_instance_id = jsonObject.getString("id");
-                        }
+                        var_instance_id = jsonObject.getString("_id");
                     }
                 } else {
                     System.out.println(response.message());
@@ -142,7 +142,8 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
 
 
                 if (serverURL == null) {
-                    myurl = myurl + "/" + var_instance_id;
+                    //myurl = myurl + "/" + var_instance_id;
+                    //myurl = myurl + "/" + var_instance_id;
                     url = new URL(myurl);
                 } else {
                     url = serverURL;
@@ -152,7 +153,7 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
                 Request request1 = new Request.Builder()
                         .url(url)
                         .get()
-                        .addHeader("authorization", "token 281de2b90e14e068f73614375903cb427c41bb96")
+                        .addHeader("authorization", "token 697f5d53f9372ca7d986369841b775c94e459578")
                         .addHeader("cache-control", "no-cache")
                         .addHeader("Content-Type", "application/json")
                         .addHeader("charset", "utf-8")
@@ -214,17 +215,31 @@ public class CSVODKDownloader extends AsyncTask<Void, Void, String> {
                 //pd.cancel();
             } else {
 
-                JSONArray json = new JSONArray(result);
+                JSONObject json_obj = new JSONObject(result);
+
+                JSONArray json = json_obj.getJSONArray("results");
 
                 //File file_lf = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects/abbd3edb-a075-4b6e-9732-406f537bc20c/forms/FORM NO A 1 CRF Pneumonia-media/" + "forma0.csv");
-                File file_lf = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects/d2d3b5fc-21d4-45e8-a764-ed28b9489c5f/forms/FORM NO A 1 CRF Pneumonia-media/" + "forma0.csv");
+
+
+                File folders = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects/");
+
+                String[] str = null;
+
+                for (String folder : folders.list()) {
+                    str = folders.list();
+                }
+
+                for (int a = 0; a <= str.length - 1; a++) {
+
+                    File file_lf = new File("/storage/emulated/0/Android/data/org.odk.collect.android/files/projects/" + str[a] + "/forms/FORM NO A 1 CRF Pneumonia-media/" + "forma0.csv");
+
+                    String csvString = CDL.toString(json);
+                    FileUtils.writeStringToFile(file_lf, csvString);
+                }
 
 
                 //File file_lf = new File(Environment.getExternalStorageDirectory() + "/tvipneumonia2022/forma0.csv");
-
-
-                String csvString = CDL.toString(json);
-                FileUtils.writeStringToFile(file_lf, csvString);
 
 
                 //DatabaseHelper db = new DatabaseHelper(mContext);
