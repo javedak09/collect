@@ -31,6 +31,10 @@ def getMasterCommitCount = { ->
                 case 'unix':
                     commandLine 'git', 'rev-list', '--first-parent', '--count', 'master'
                     break
+                default:
+                    executable = 'git'
+                    args = ['describe', '--tags', '--abbrev=0']
+                    break;
             }
             standardOutput = stdout
         }
@@ -148,13 +152,19 @@ android {
 
     // https://stackoverflow.com/a/27119543/152938
     applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            outputFileName = new File(outputFileName.replace(".apk", "-${defaultConfig.versionName}.apk"))
+        if (variant.getName() == "selfSignedRelease" || variant.getName() == "odkCollectRelease"
+                || variant.getName() == "debug") {
+            {
+                variant.outputs.all { output ->
+                    outputFileName = new File(outputFileName.replace(".apk", "-${defaultConfig.versionCode}.apk"))
+                }
+            }
         }
     }
+
     testVariants.all { variant ->
         variant.outputs.all { output ->
-            outputFileName = new File(outputFileName.replace(".apk", "-${defaultConfig.versionName}.apk"))
+            outputFileName = new File(outputFileName.replace(".apk", "-${defaultConfig.versionCode}.apk"))
         }
     }
 
@@ -230,7 +240,7 @@ configurations.all {
 
         force 'org.objenesis:objenesis:2.6'
     }
-    
+
     transitive = true
 }
 
@@ -300,13 +310,13 @@ dependencies {
     implementation Dependencies.squareup_okhttp
     implementation Dependencies.squareup_okhttp_tls
     implementation Dependencies.burgstaller_okhttp_digest
-    
+
     implementation Dependencies.persian_joda_time
     implementation Dependencies.myanmar_calendar
     implementation Dependencies.bikram_sambat
     implementation Dependencies.rarepebble_colorpicker
     implementation Dependencies.commons_io
-    implementation (Dependencies.opencsv) {
+    implementation(Dependencies.opencsv) {
         exclude group: 'commons-logging'
     }
     implementation(Dependencies.javarosa) {
@@ -369,7 +379,8 @@ dependencies {
 
     testImplementation project(':androidtest')
     testImplementation(project(path: ':testshared')) {
-        exclude group: 'org.robolectric' // Some tests in `collect_app` don't work with newer Robolectric
+        exclude group: 'org.robolectric'
+        // Some tests in `collect_app` don't work with newer Robolectric
     }
 
     testImplementation Dependencies.robolectric
@@ -405,7 +416,8 @@ dependencies {
 
     debugImplementation project(':fragmentstest')
     debugImplementation(project(':testshared')) {
-        exclude group: 'org.robolectric' // Some tests in `collect_app` don't work with newer Robolectric
+        exclude group: 'org.robolectric'
+        // Some tests in `collect_app` don't work with newer Robolectric
     }
 
     // Real LeakCanary for debug builds only: notifications, analysis, etc
