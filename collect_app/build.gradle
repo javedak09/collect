@@ -31,10 +31,6 @@ def getMasterCommitCount = { ->
                 case 'unix':
                     commandLine 'git', 'rev-list', '--first-parent', '--count', 'master'
                     break
-                default:
-                    executable = 'git'
-                    args = ['describe', '--tags', '--abbrev=0']
-                    break;
             }
             standardOutput = stdout
         }
@@ -79,7 +75,8 @@ android {
         applicationId('org.odk.collect.android')
         minSdkVersion Versions.android_min_sdk
         targetSdkVersion Versions.android_target_sdk
-        versionCode LEGACY_BUILD_NUMBER_OFFSET + getMasterCommitCount()
+        //versionCode LEGACY_BUILD_NUMBER_OFFSET + getMasterCommitCount()
+        versionCode LEGACY_BUILD_NUMBER_OFFSET + 1
         versionName getVersionName()
         testInstrumentationRunner('androidx.test.runner.AndroidJUnitRunner')
         multiDexEnabled true
